@@ -51,7 +51,21 @@ header{
     box-shadow: none;
 }
 
+/* loader section */
+.loader{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 /* Dashboard Section */
+.dashboard{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 .bg-1{
     background-color: #C4D852;
 }
@@ -69,7 +83,4 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
-.dashboard{
-    display: none;
 }

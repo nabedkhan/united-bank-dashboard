@@ -1,8 +1,11 @@
 // login area selector variable
-const loginBtn = document.getElementById('button');
 const email = document.getElementById('inputEmail');
 const password = document.getElementById('inputPassword');
 const loginContent = document.querySelector('#header');
+const loginBtn = document.querySelector('#form');
+
+//loader selector
+const loader = document.querySelector('.loader');
 
 // dashboard area selector variable
 const dashboard = document.querySelector('.dashboard');
@@ -15,11 +18,22 @@ const withdrawValueText = document.querySelector('.withdrawValue');
 const totalBalanceText = document.querySelector('.totalBalance');
 
 // Login button event handler
-loginBtn.addEventListener('click', function (event) {
-    if (email.value && password.value) {
-        loginContent.style.display = 'none';
-        dashboard.style.display = 'block'
-    }
+loginBtn.addEventListener('submit', function (event) {
+    //login form & dashboard hide
+    loginContent.style.display = 'none';
+    dashboard.style.display = 'none'
+    //loader show
+    loader.style.display = 'flex';
+
+    setTimeout(function () {
+        //loader hide
+        loader.style.display = 'none';
+        //dashboard show
+        if (email.value && password.value) {
+            loginContent.style.display = 'none';
+            dashboard.style.display = 'flex'
+        }
+    }, 2000);
     event.preventDefault();
 });
 
@@ -29,8 +43,8 @@ depositBtn.addEventListener('click', function () {
         alert('Please Enter Your Deposit Amount');
     }
     else {
-        addAmount(inputDeposit, depositValueText);
-        addAmount(inputDeposit, totalBalanceText);
+        calculation(inputDeposit, depositValueText, 'deposit');
+        calculation(inputDeposit, totalBalanceText, 'deposit');
         inputDeposit.value = "";
     }
 });
@@ -41,24 +55,23 @@ withdrawBtn.addEventListener('click', function () {
         alert('Please Enter Your Withdraw Amount');
     }
     else {
-        addAmount(inputWithdraw, withdrawValueText);
-        withdrawAmount(inputWithdraw, totalBalanceText);
+        calculation(inputWithdraw, withdrawValueText, 'deposit');
+        calculation(inputWithdraw, totalBalanceText, 'withdraw');
         inputWithdraw.value = "";
     }
 });
 
 // function add amount in deposit, withdraw, balance
-function addAmount(input, valueText) {
-    const depositAmount = parseFloat(input.value);
-    const currentDeposit = parseFloat(valueText.innerText);
-    const totalDeposit = depositAmount + currentDeposit;
-    valueText.innerText = totalDeposit;
-}
-
-// function remove amount from balance
-function withdrawAmount(input, valueText) {
-    const depositAmount = parseFloat(input.value);
-    const currentDeposit = parseFloat(valueText.innerText);
-    const totalDeposit = currentDeposit - depositAmount;
-    valueText.innerText = totalDeposit;
+function calculation(input, valueText, getTask) {
+    const getId = input.value;
+    const inputAmount = parseFloat(getId);
+    const currentAmount = parseFloat(valueText.innerText);
+    let totalAmount = 0;
+    if (getTask == 'deposit') {
+        totalAmount = inputAmount + currentAmount;
+    }
+    if (getTask == 'withdraw') {
+        totalAmount = currentAmount - inputAmount;
+    }
+    valueText.innerText = totalAmount;
 }
