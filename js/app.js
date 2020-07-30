@@ -51,13 +51,18 @@ depositBtn.addEventListener('click', function () {
 
 // Withdraw button event handler
 withdrawBtn.addEventListener('click', function () {
-    if (inputWithdraw.value === '') {
-        alert('Please Enter Your Withdraw Amount');
+    if (parseInt(totalBalanceText.innerText) > parseInt(inputWithdraw.value)) {
+        if (inputWithdraw.value === '') {
+            alert('Please Enter Your Withdraw Amount');
+        }
+        else {
+            calculation(inputWithdraw, withdrawValueText, 'deposit');
+            calculation(inputWithdraw, totalBalanceText, 'withdraw');
+            inputWithdraw.value = "";
+        }
     }
     else {
-        calculation(inputWithdraw, withdrawValueText, 'deposit');
-        calculation(inputWithdraw, totalBalanceText, 'withdraw');
-        inputWithdraw.value = "";
+        alert('Your have no enough balance for withdraw!');
     }
 });
 
